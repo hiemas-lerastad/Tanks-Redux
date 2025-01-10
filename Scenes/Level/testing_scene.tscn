@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://bejc07m5l7lfw"]
+
+[ext_resource type="PackedScene" uid="uid://m03xo3rkc33r" path="res://Scenes/Player/tank.tscn" id="1_rr33h"]
+
+[node name="TestingScene" type="Node2D"]
+
+[node name="terrain" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="terrain"]
+polygon = PackedVector2Array(2, -3, 173, -80, 249, -53, 249, 9, -250, 10, -249, -9, -227, -105, -112, -8)
+
+[node name="Polygon2D" type="Polygon2D" parent="terrain"]
+polygon = PackedVector2Array(2, -3, 173, -80, 249, -53, 249, 9, -250, 10, -249, -9, -227, -105, -112, -8)
+
+[node name="tank" parent="." instance=ExtResource("1_rr33h")]
+position = Vector2(-1, -56)
+
+[node name="Camera2D" type="Camera2D" parent="."]
