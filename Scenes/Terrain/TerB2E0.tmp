@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx4f5lucu71a0"]
+
+[ext_resource type="Script" path="res://Scripts/Terrain/Terrain.gd" id="1_qvjab"]
+[ext_resource type="PackedScene" uid="uid://b8hvcqilidnq4" path="res://Scenes/Terrain/Chunk.tscn" id="2_udeul"]
+
+[node name="Terrain" type="Node2D" node_paths=PackedStringArray("chunks", "carve_shape")]
+script = ExtResource("1_qvjab")
+chunks = NodePath("Chunks")
+carve_shape = NodePath("Carve Shape TEST")
+chunk_scene = ExtResource("2_udeul")
+
+[node name="Chunks" type="Node2D" parent="."]
+
+[node name="Carve Shape TEST" type="Polygon2D" parent="."]

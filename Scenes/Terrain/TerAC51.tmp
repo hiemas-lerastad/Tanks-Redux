@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cx4f5lucu71a0"]
+
+[ext_resource type="Script" path="res://Scripts/Terrain/Terrain.gd" id="1_qvjab"]
+
+[node name="Terrain" type="Node2D"]
+script = ExtResource("1_qvjab")
+
+[node name="Chunks" type="Node2D" parent="."]
+
+[node name="Carve Shape TEST" type="Polygon2D" parent="."]
