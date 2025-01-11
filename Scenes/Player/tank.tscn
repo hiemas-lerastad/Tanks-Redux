@@ -1,17 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://m03xo3rkc33r"]
+[gd_scene load_steps=7 format=3 uid="uid://m03xo3rkc33r"]
 
 [ext_resource type="Script" path="res://Scripts/Player/tank.gd" id="1_bffw6"]
 [ext_resource type="Texture2D" uid="uid://bvgqv1b486d6u" path="res://Assets/Sprites/Player/body.png" id="1_edwx4"]
 [ext_resource type="Texture2D" uid="uid://cuctd1y4tc270" path="res://Assets/Sprites/Player/turret.png" id="2_ljydc"]
 [ext_resource type="Script" path="res://Scripts/Components/_input_component.gd" id="2_n0vqo"]
+[ext_resource type="Texture2D" uid="uid://r5bsbxglfft5" path="res://Assets/Sprites/Player/tmp_power.png" id="5_3fhk8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3ot6a"]
 radius = 13.5
 height = 64.0
 
-[node name="tank" type="CharacterBody2D"]
+[node name="tank" type="CharacterBody2D" node_paths=PackedStringArray("body", "turret", "shoot_progress")]
 texture_filter = 1
 script = ExtResource("1_bffw6")
+body = NodePath("body")
+turret = NodePath("body/turret")
+shoot_progress = NodePath("body/turret/shoot_progress")
 
 [node name="_input_component" type="Node" parent="." node_paths=PackedStringArray("controls")]
 script = ExtResource("2_n0vqo")
@@ -21,10 +25,26 @@ controls = NodePath("..")
 texture = ExtResource("1_edwx4")
 
 [node name="turret" type="Sprite2D" parent="body"]
-position = Vector2(-1, 0)
 texture = ExtResource("2_ljydc")
+offset = Vector2(-1.5, 0)
+
+[node name="shoot_point" type="Node2D" parent="body/turret"]
+position = Vector2(0, -22)
+
+[node name="shoot_progress" type="TextureProgressBar" parent="body/turret"]
+z_index = -1
+offset_top = -19.0
+offset_right = 100.0
+offset_bottom = 31.0
+rotation = -1.5708
+scale = Vector2(0.45, 0.45)
+texture_progress = ExtResource("5_3fhk8")
+texture_progress_offset = Vector2(0, -25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 9.5)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_3ot6a")
+
+[connection signal="begin_firing" from="_input_component" to="_input_component" method="_begin_shooting_animation"]
+[connection signal="end_firing" from="_input_component" to="_input_component" method="_end_shooting_animation"]
