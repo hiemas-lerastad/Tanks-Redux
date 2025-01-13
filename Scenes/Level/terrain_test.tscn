@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmmkhk2lqgaob"]
+
+[ext_resource type="PackedScene" uid="uid://cx4f5lucu71a0" path="res://Scenes/Terrain/Terrain.tscn" id="1_pvfms"]
+
+[node name="TerrainTest" type="Node2D"]
+
+[node name="Terrain" parent="." instance=ExtResource("1_pvfms")]

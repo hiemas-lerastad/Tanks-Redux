@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5a7c3x3rclvp"]
+[gd_scene load_steps=3 format=3 uid="uid://c5a7c3x3rclvp"]
 
 [ext_resource type="Script" path="res://Scripts/Terrain/CollisionPolygon.gd" id="1_c75mw"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8ekpf"]
+properties/0/path = NodePath("Polygon2D:polygon")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:polygon")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="CollisionPolygon" type="CollisionPolygon2D" node_paths=PackedStringArray("polygon_node")]
 script = ExtResource("1_c75mw")
@@ -8,3 +16,6 @@ polygon_node = NodePath("Polygon2D")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 color = Color(0.0705882, 0.368627, 0, 1)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_8ekpf")

@@ -12,3 +12,7 @@ chunk_scene = ExtResource("2_udeul")
 [node name="Chunks" type="Node2D" parent="."]
 
 [node name="Carve Shape TEST" type="Polygon2D" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/Terrain/Chunk.tscn")
+spawn_path = NodePath("../Chunks")

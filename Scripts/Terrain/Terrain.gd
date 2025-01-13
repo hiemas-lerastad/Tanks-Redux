@@ -45,6 +45,7 @@ func _carve() -> void:
 
 	var four_chunks = _get_affected_chunks(mouse_pos)
 	for chunk in four_chunks:
+		print(chunk)
 		chunk.carve(mouse_polygon)
 
 func _spawn_chunks() -> void:
@@ -59,7 +60,7 @@ func _spawn_chunks() -> void:
 				Vector2(chunk_size*i,chunk_size*(j+1) + (screen_size.y/2))
 			]
 			chunk_grid[-1].push_back(chunk)
-			chunks.add_child(chunk)
+			chunks.add_child(chunk, true)
 
 func _get_affected_chunks(pos) -> Array:
 	var affected_chunks = []
