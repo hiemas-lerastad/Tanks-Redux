@@ -17,7 +17,7 @@ signal start_game;
 const PORT: int = 9999;
 var enet_peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new();
 
-func _show_lobby() -> void:
+func show_lobby() -> void:
 	main_menu.hide();
 	lobby_panel.show();
 

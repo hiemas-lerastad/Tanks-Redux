@@ -6,7 +6,7 @@ extends Node2D;
 @export var carve_shape: Polygon2D;
 
 @export_category("Settings")
-@export var chunk_size: int = 100;
+@export var chunk_size: int = 50;
 @export var carve_radius: int = 40;
 @export var min_movement_update: int = 5;
 
@@ -31,7 +31,7 @@ func _ready() -> void:
 func _process(_delta) -> void:
 	if Input.is_action_pressed("click_left"):
 		if old_mouse_pos.distance_to(mouse_pos) > min_movement_update:
-			_carve()
+			_carve(mouse_pos)
 			old_mouse_pos = mouse_pos
 
 func _input(event) -> void:
@@ -40,12 +40,25 @@ func _input(event) -> void:
 		carve_shape.position = mouse_pos
 		queue_redraw()
 
-func _carve() -> void:
-	var mouse_polygon = Transform2D(0, mouse_pos) * (carve_shape.polygon)
+func _carve(carve_position: Vector2) -> void:
+	if not multiplayer.is_server():
+		_carve_server.rpc(mouse_pos);
 
-	var four_chunks = _get_affected_chunks(mouse_pos)
+	var carve_polygon = Transform2D(0, carve_position) * (carve_shape.polygon)
+
+	var four_chunks = _get_affected_chunks(carve_position)
 	for chunk in four_chunks:
-		print(chunk)
+		chunk.carve(carve_polygon)
+
+@rpc("any_peer", "reliable")
+func _carve_server(client_position: Vector2) -> void:
+	if not multiplayer.is_server():
+		return
+
+	var mouse_polygon = Transform2D(0, client_position) * (carve_shape.polygon)
+
+	var four_chunks = _get_affected_chunks(client_position)
+	for chunk in four_chunks:
 		chunk.carve(mouse_polygon)
 
 func _spawn_chunks() -> void:

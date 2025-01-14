@@ -1,7 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://cx4f5lucu71a0"]
+[gd_scene load_steps=6 format=3 uid="uid://cx4f5lucu71a0"]
 
 [ext_resource type="Script" path="res://Scripts/Terrain/Terrain.gd" id="1_qvjab"]
 [ext_resource type="PackedScene" uid="uid://b8hvcqilidnq4" path="res://Scenes/Terrain/Chunk.tscn" id="2_udeul"]
+[ext_resource type="Texture2D" uid="uid://g0sdbhn8ml8k" path="res://icon.svg" id="3_ltdod"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uljs8"]
+radius = 50.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_hjayw"]
+properties/0/path = NodePath("RigidBody2D:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("RigidBody2D:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="Terrain" type="Node2D" node_paths=PackedStringArray("chunks", "carve_shape")]
 script = ExtResource("1_qvjab")
@@ -14,5 +26,17 @@ chunk_scene = ExtResource("2_udeul")
 [node name="Carve Shape TEST" type="Polygon2D" parent="."]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://Scenes/Terrain/Chunk.tscn")
 spawn_path = NodePath("../Chunks")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(917, 132)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("CircleShape2D_uljs8")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_ltdod")
+
+[node name="Object Sync Test" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_hjayw")

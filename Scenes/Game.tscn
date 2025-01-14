@@ -10,5 +10,5 @@ lobby_scene = ExtResource("2_o3f35")
 level_scene = ExtResource("3_hmqo7")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://Scenes/Menu/Lobby.tscn", "res://Scenes/Level/terrain_test.tscn")
+_spawnable_scenes = PackedStringArray("res://Scenes/Level/terrain_test.tscn")
 spawn_path = NodePath("..")

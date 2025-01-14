@@ -8,6 +8,7 @@ extends Node;
 const PORT: int = 9999;
 var enet_peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new();
 var lobby: Lobby;
+var player_list: Array;
 
 func _ready():
 	lobby = lobby_scene.instantiate();
@@ -24,7 +25,9 @@ func _on_host() -> void:
 	
 	lobby.add_player(multiplayer.get_unique_id());
 	
-	lobby._show_lobby();
+	player_list.append(multiplayer.get_unique_id());
+	
+	lobby.show_lobby();
 	
 	upnp_setup();
 	
@@ -32,14 +35,30 @@ func _on_join() -> void:
 	enet_peer.create_client(lobby.address_entry.text, PORT);
 	multiplayer.multiplayer_peer = enet_peer;
 	
-	lobby._show_lobby();
+	lobby.show_lobby();
+	
+	await get_tree().create_timer(1).timeout
+
+	_client_join.rpc(multiplayer.get_unique_id());
 
 func _start_game() -> void:
 	if multiplayer.is_server():
 		lobby.queue_free();
+		
+		_client_start.rpc();
 
-	var level: Node2D = level_scene.instantiate();
+	var level: Level = level_scene.instantiate();
 	add_child(level, true);
+	level.add_players(player_list);
+
+@rpc("any_peer", "call_remote")
+func _client_join(id) -> void:
+	player_list.append(id);
+
+@rpc("any_peer", "call_remote")
+func _client_start() -> void:
+	if not multiplayer.is_server():
+		lobby.queue_free();
 
 func upnp_setup() -> void:
 	var upnp = UPNP.new();

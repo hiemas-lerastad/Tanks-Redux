@@ -35,10 +35,8 @@ func carve(clipping_polygon: PackedVector2Array) -> void:
 				colpol.queue_free()
 			1:
 				colpol.update_pol(clipped_polygons[0])
-				print('here1')
 			_:
 				colpol.update_pol(clipped_polygons[0])
-				print('here2')
 				for i in range(clipped_polygons.size() - 1):
 					static_body.add_child(_new_collision_polygon(clipped_polygons[i + 1]), true)
 
