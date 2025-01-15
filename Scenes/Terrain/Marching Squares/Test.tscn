@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ciht2tcxuqcvo"]
+
+[ext_resource type="Script" path="res://Scripts/Terrain/Marching Squares/SquareManager.gd" id="1_nlywu"]
+[ext_resource type="PackedScene" uid="uid://c8rt2gk22dhxm" path="res://Scenes/Terrain/Marching Squares/Square.tscn" id="2_ttqaj"]
+
+[node name="Test" type="Node2D"]
+
+[node name="Squares" type="Node2D" parent="."]
+script = ExtResource("1_nlywu")
+dot_color_filled = Color(1, 1, 1, 1)
+square_scene = ExtResource("2_ttqaj")
