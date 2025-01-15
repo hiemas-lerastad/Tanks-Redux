@@ -11,7 +11,6 @@ signal shot_fired(strength: int)
 
 var is_firing: bool
 var firing_tween: Tween
-var current_fire_strength: int
 
 func gravity() -> void:
 	''' applies gravity to characterbody2d controls ?accelerate if has been falling for x time? '''
@@ -60,8 +59,9 @@ func fire_controls() -> void:
 	if(trigger_release and is_firing):
 		#began firing and released
 		is_firing = false
+		emit_signal("shot_fired",controls.shoot_progress.value) # bind projectile shot to this
 		emit_signal("end_firing")
-		emit_signal("shot_fired",controls.shoot_progress) # bind projectile shot to this
+		
 		
 
 func _begin_shooting_animation():
