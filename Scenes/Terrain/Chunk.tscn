@@ -9,3 +9,7 @@ static_body = NodePath("StaticBody2D")
 collision_polygon_scene = ExtResource("2_t5av0")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/Terrain/CollisionPolygon.tscn")
+spawn_path = NodePath("../StaticBody2D")

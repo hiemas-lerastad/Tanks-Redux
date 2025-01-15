@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://m03xo3rkc33r"]
+[gd_scene load_steps=7 format=3 uid="uid://m03xo3rkc33r"]
 
 [ext_resource type="Script" path="res://Scripts/Player/tank.gd" id="1_bffw6"]
 [ext_resource type="Texture2D" uid="uid://bvgqv1b486d6u" path="res://Assets/Sprites/Player/body.png" id="1_edwx4"]
@@ -9,8 +9,14 @@
 radius = 13.5
 height = 64.0
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_otgro"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
 [node name="tank" type="CharacterBody2D"]
 texture_filter = 1
+collision_layer = 2
 script = ExtResource("1_bffw6")
 
 [node name="_input_component" type="Node" parent="." node_paths=PackedStringArray("controls")]
@@ -28,3 +34,6 @@ texture = ExtResource("2_ljydc")
 position = Vector2(0, 9.5)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_3ot6a")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_otgro")

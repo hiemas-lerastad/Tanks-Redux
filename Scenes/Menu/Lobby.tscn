@@ -1,0 +1,84 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdf2svf5omaui"]
+
+[ext_resource type="Script" path="res://Scripts/Menu/Lobby.gd" id="1_p1hnd"]
+[ext_resource type="PackedScene" uid="uid://dxqf3upn7qgvi" path="res://Scenes/Menu/Player Label.tscn" id="2_3whku"]
+
+[node name="Lobby" type="Control" node_paths=PackedStringArray("main_menu", "lobby_panel", "address_entry", "player_list")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p1hnd")
+main_menu = NodePath("Main Menu")
+lobby_panel = NodePath("Lobby Panel")
+address_entry = NodePath("Main Menu/VBoxContainer/Ip Input")
+player_list = NodePath("Lobby Panel/HBoxContainer/Player List")
+player_scene = ExtResource("2_3whku")
+
+[node name="Main Menu" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 649.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main Menu"]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 63.0
+offset_right = 1057.0
+offset_bottom = 589.0
+
+[node name="Host Button" type="Button" parent="Main Menu/VBoxContainer"]
+layout_mode = 2
+text = "Host Game
+"
+
+[node name="Ip Input" type="TextEdit" parent="Main Menu/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+placeholder_text = "Input IP to Join
+"
+
+[node name="Join Button" type="Button" parent="Main Menu/VBoxContainer"]
+layout_mode = 2
+text = "Join Game
+"
+
+[node name="Lobby Panel" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 1148.0
+offset_bottom = 655.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Lobby Panel"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 29.0
+offset_right = 1126.0
+offset_bottom = 618.0
+alignment = 1
+
+[node name="Button Container" type="VBoxContainer" parent="Lobby Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="Start Game" type="Button" parent="Lobby Panel/HBoxContainer/Button Container"]
+layout_mode = 2
+text = "Start Game
+"
+
+[node name="Player List" type="VBoxContainer" parent="Lobby Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Lobby Panel/HBoxContainer/Player List"]
+layout_mode = 2
+text = "Player List
+"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Lobby Panel"]
+_spawnable_scenes = PackedStringArray("res://Scenes/Menu/Player Label.tscn")
+spawn_path = NodePath("../HBoxContainer/Player List")
+
+[connection signal="pressed" from="Main Menu/VBoxContainer/Host Button" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="Main Menu/VBoxContainer/Join Button" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="Lobby Panel/HBoxContainer/Button Container/Start Game" to="." method="_on_start_button_pressed"]
