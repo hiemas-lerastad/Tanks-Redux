@@ -1,16 +1,20 @@
 extends CharacterBody2D
 class_name projectile
 
-var explosion_size: float # size to grow the explosion + carve to (currently only makes sense in circle explosion)
 
+@export var explosion_type: PackedScene
 var initial_strength: int
-#var initial_direction: Vector2
 
-func _explode() ->void:
+
+func explode() ->void:
 	''' swap sprite to appropriate explosion type, create a temporary area2d to scan for players without 
 	colliding with them, trigger the growing + culling'''
 	
-	pass
+	if(explosion_type != null):
+		var explosion_clone: explosion = explosion_type.instantiate()
+		explosion_clone.global_position = global_position
+		add_sibling(explosion_clone)
+		queue_free()
 
 func _wind_resistance() -> void:
 	''' placeholder until wind has been added'''
@@ -30,7 +34,7 @@ func _physics_process(delta):
 	_drag(delta)
 	var c: KinematicCollision2D = move_and_collide(velocity*delta)
 	if(c != null):
-		pass
+		explode()
 
 func _ready():
 	''' split second of non-collision to allow for touching shooter, other spawned projectiles, etc.'''
