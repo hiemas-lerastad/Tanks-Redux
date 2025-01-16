@@ -5,8 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cuctd1y4tc270" path="res://Assets/Sprites/Player/turret.png" id="2_ljydc"]
 [ext_resource type="Script" path="res://Scripts/Components/_input_component.gd" id="2_n0vqo"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3ot6a"]
-radius = 13.5
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_201yt"]
 height = 64.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_otgro"]
@@ -14,10 +13,12 @@ properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 2
 
-[node name="tank" type="CharacterBody2D"]
+[node name="tank" type="CharacterBody2D" node_paths=PackedStringArray("body")]
 texture_filter = 1
 collision_layer = 2
+floor_max_angle = 1.39626
 script = ExtResource("1_bffw6")
+body = NodePath("body")
 
 [node name="_input_component" type="Node" parent="." node_paths=PackedStringArray("controls")]
 script = ExtResource("2_n0vqo")
@@ -31,9 +32,9 @@ position = Vector2(-1, 0)
 texture = ExtResource("2_ljydc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 9.5)
+position = Vector2(0, 12)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_3ot6a")
+shape = SubResource("CapsuleShape2D_201yt")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_otgro")
