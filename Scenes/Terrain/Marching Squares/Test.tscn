@@ -13,11 +13,12 @@ properties/1/path = NodePath("Squares:seed")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Test" type="Node2D" node_paths=PackedStringArray("player_container", "square_manager", "carve_shape")]
+[node name="Test" type="Node2D" node_paths=PackedStringArray("player_container", "square_manager", "carve_shape", "projectile_container")]
 script = ExtResource("1_o3847")
 player_container = NodePath("Player Container")
 square_manager = NodePath("Squares")
 carve_shape = NodePath("Carve Shape TEST")
+projectile_container = NodePath("Projectile Container")
 player_scene = ExtResource("3_ncci5")
 
 [node name="Squares" type="StaticBody2D" parent="." node_paths=PackedStringArray("level")]
@@ -32,7 +33,13 @@ level = NodePath("..")
 _spawnable_scenes = PackedStringArray("res://Scenes/Player/tank.tscn")
 spawn_path = NodePath("../Player Container")
 
+[node name="Projectile Spawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/Projectiles/small.tscn", "res://Scenes/Explosions/small.tscn")
+spawn_path = NodePath("../Projectile Container")
+
 [node name="Seed Synchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_2mksd")
 
 [node name="Carve Shape TEST" type="Polygon2D" parent="."]
+
+[node name="Projectile Container" type="Node" parent="."]

@@ -58,7 +58,8 @@ func _client_join(id) -> void:
 @rpc("any_peer", "call_remote")
 func _client_start() -> void:
 	if not multiplayer.is_server():
-		lobby.queue_free();
+		lobby.hide();
+		pass;
 
 func upnp_setup() -> void:
 	var upnp = UPNP.new();

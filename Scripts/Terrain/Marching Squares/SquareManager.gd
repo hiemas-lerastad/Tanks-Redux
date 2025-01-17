@@ -155,8 +155,6 @@ func init_terrain() -> void:
 	noise.frequency = 0.02
 	noise.seed = seed;
 	
-	print(seed)
-	
 	set_initial_grid()
 
 	for x in range(0, matrix.size() - 1):

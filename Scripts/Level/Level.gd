@@ -5,6 +5,7 @@ extends Node2D;
 @export var player_container: Node2D;
 @export var square_manager: SquareManager;
 @export var carve_shape: Polygon2D;
+@export var projectile_container: Node;
 
 @export_category("Scenes")
 @export var player_scene: PackedScene;
@@ -22,6 +23,9 @@ func _ready() -> void:
 		seed = rng.get_seed();
 	_make_mouse_circle()
 	square_manager.init_terrain()
+	
+	Globals.projectile_container = projectile_container;
+	Globals.level = self;
 
 func add_players(player_list: Array) -> void:
 	if multiplayer.is_server():
@@ -33,6 +37,7 @@ func add_players(player_list: Array) -> void:
 			#player_instance.spawn_position = Vector2(player_instance.position.x + (index * 200), player_instance.position.y);
 			#
 			player_instance.name = str(player);
+			player_instance.projectile_container_name = projectile_container.name;
 			player_container.add_child(player_instance)
 			
 			setup_player.rpc_id(player, player, index)
