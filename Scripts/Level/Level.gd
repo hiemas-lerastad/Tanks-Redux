@@ -5,7 +5,7 @@ extends Node2D;
 @export var player_container: Node2D;
 @export var square_manager: SquareManager;
 @export var carve_shape: Polygon2D;
-@export var projectile_container: Node;
+@export var projectile_container: Node2D;
 
 @export_category("Scenes")
 @export var player_scene: PackedScene;

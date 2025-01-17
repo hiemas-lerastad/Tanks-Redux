@@ -9,7 +9,9 @@ var initial_strength: int
 func explode() ->void:
 	''' swap sprite to appropriate explosion type, create a temporary area2d to scan for players without 
 	colliding with them, trigger the growing + culling'''
-	
+	if not multiplayer.is_server():
+		return
+
 	if(explosion_type != null):
 		var explosion_clone: explosion = explosion_type.instantiate()
 		explosion_clone.global_position = global_position

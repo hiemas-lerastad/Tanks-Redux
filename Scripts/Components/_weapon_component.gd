@@ -22,4 +22,5 @@ func _fire_server(shot_strength: int) -> void:
 	projectile_clone.global_position = shoot_point.global_position
 	projectile_clone.rotation = parent_tank.turret.rotation
 	projectile_clone.initial_strength = shot_strength * 3
+	projectile_clone.set_multiplayer_authority(1)
 	Globals.projectile_container.add_child(projectile_clone, true)
