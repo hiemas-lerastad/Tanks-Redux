@@ -31,14 +31,14 @@ func _ready() -> void:
 func _process(_delta) -> void:
 	if Input.is_action_pressed("click_left"):
 		if old_mouse_pos.distance_to(mouse_pos) > min_movement_update:
-			_carve(mouse_pos)
-			old_mouse_pos = mouse_pos
+			_carve(mouse_pos);
+			old_mouse_pos = mouse_pos;
 
 func _input(event) -> void:
 	if event is InputEventMouseMotion:
-		mouse_pos = get_global_mouse_position()
-		carve_shape.position = mouse_pos
-		queue_redraw()
+		mouse_pos = get_global_mouse_position();
+		carve_shape.position = mouse_pos;
+		queue_redraw();
 
 func _carve(carve_position: Vector2) -> void:
 	if not multiplayer.is_server():
