@@ -1,10 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://cf1um28e5k160"]
+[gd_scene load_steps=5 format=3 uid="uid://cf1um28e5k160"]
 
 [ext_resource type="Texture2D" uid="uid://b3off22yor00j" path="res://Assets/Sprites/projectile/tmp_explosion.png" id="1_yt7p2"]
 [ext_resource type="Script" path="res://Scripts/Explosions/small.gd" id="2_ptwyi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3vdg8"]
 radius = 25.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_tfae1"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [node name="Small" type="Sprite2D"]
 texture_filter = 1
@@ -16,3 +21,6 @@ exploision_time = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_3vdg8")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_tfae1")

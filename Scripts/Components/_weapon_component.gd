@@ -12,7 +12,7 @@ func _fire(shot_strength: int) -> void:
 		projectile_clone.global_position = shoot_point.global_position
 		projectile_clone.rotation = parent_tank.turret.rotation
 		projectile_clone.initial_strength = shot_strength * 3
-		Globals.projectile_container.add_child(projectile_clone)
+		Globals.projectile_container.add_child(projectile_clone, true)
 	else:
 		_fire_server.rpc_id(1, shot_strength)
 	
@@ -22,4 +22,4 @@ func _fire_server(shot_strength: int) -> void:
 	projectile_clone.global_position = shoot_point.global_position
 	projectile_clone.rotation = parent_tank.turret.rotation
 	projectile_clone.initial_strength = shot_strength * 3
-	Globals.projectile_container.add_child(projectile_clone)
+	Globals.projectile_container.add_child(projectile_clone, true)
