@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" path="res://Scripts/Game.gd" id="1_02dhv"]
 [ext_resource type="PackedScene" uid="uid://cdf2svf5omaui" path="res://Scenes/Menu/Lobby.tscn" id="2_o3f35"]
-[ext_resource type="PackedScene" uid="uid://cmmkhk2lqgaob" path="res://Scenes/Level/terrain_test.tscn" id="3_hmqo7"]
+[ext_resource type="PackedScene" uid="uid://ciht2tcxuqcvo" path="res://Scenes/Terrain/Marching Squares/Test.tscn" id="3_gc2hc"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_02dhv")
 lobby_scene = ExtResource("2_o3f35")
-level_scene = ExtResource("3_hmqo7")
+level_scene = ExtResource("3_gc2hc")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://Scenes/Level/terrain_test.tscn")
+_spawnable_scenes = PackedStringArray("res://Scenes/Level/terrain_test.tscn", "res://Scenes/Terrain/Marching Squares/Test.tscn")
 spawn_path = NodePath("..")

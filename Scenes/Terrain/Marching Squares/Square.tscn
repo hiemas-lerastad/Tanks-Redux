@@ -12,5 +12,3 @@ collision_polygon = NodePath(".")
 texture_repeat = 2
 color = Color(0.192503, 0.44321, 1.05888e-06, 1)
 antialiased = true
-
-[node name="Node2D" type="Node2D" parent="."]

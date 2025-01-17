@@ -5,7 +5,7 @@ extends Node;
 @export var lobby_scene: PackedScene;
 @export var level_scene: PackedScene;
 
-const PORT: int = 9999;
+const PORT: int = 9998;
 var enet_peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new();
 var lobby: Lobby;
 var player_list: Array;
