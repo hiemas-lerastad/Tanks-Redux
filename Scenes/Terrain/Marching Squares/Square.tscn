@@ -9,6 +9,7 @@ visible_polygon = NodePath("Polygon2D")
 collision_polygon = NodePath(".")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
 texture_repeat = 2
 color = Color(0.192503, 0.44321, 1.05888e-06, 1)
 antialiased = true
