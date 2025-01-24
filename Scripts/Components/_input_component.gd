@@ -32,8 +32,6 @@ func movement_controls() -> void:
 	
 		var input_direction = Input.get_axis("left","right")
 		
-		gravity()
-		
 		if(input_direction != 0 and !is_firing):
 			controls.velocity.x = input_direction * max_speed
 		else:
@@ -72,19 +70,27 @@ func fire_controls() -> void:
 		emit_signal("shot_fired",controls.shoot_progress.value) # bind projectile shot to this
 		emit_signal("end_firing")
 		
-		
+		if Globals.player_turn + 1 < Globals.player_list.size():
+			Globals.player_turn = Globals.player_turn + 1;
+			Globals.set_player_turn.rpc(Globals.player_turn);
+		else:
+			Globals.player_turn = 0;
+			Globals.set_player_turn.rpc(0);
 
 func _begin_shooting_animation():
 	firing_tween = create_tween()
 	firing_tween.set_loops()
-	firing_tween.tween_property(controls.shoot_progress,"value",100,1)
-	firing_tween.tween_property(controls.shoot_progress,"value",0,1)
+	firing_tween.tween_property(controls.shoot_progress, "value", 100, 1)
+	firing_tween.tween_property(controls.shoot_progress, "value", 0, 1)
 
 func _end_shooting_animation():
 	firing_tween.kill()
 	controls.shoot_progress.value = 0
 
 func _process(delta) -> void:
-	movement_controls()
-	turret_controls(delta)
-	fire_controls()
+	gravity()
+
+	if Globals.player_turn == controls.id:
+		movement_controls()
+		turret_controls(delta)
+		fire_controls()

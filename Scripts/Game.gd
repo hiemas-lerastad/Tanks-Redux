@@ -46,10 +46,22 @@ func _start_game() -> void:
 		lobby.queue_free();
 		
 		_client_start.rpc();
+		
+		for player_index in range(0, player_list.size()):
+			Globals.player_list.append({
+				'id': player_index,
+				'multiplayer_id': player_list[player_index],
+				'active': true
+			})
+			
+		Globals.set_player_list.rpc(Globals.player_list);
+		
+		Globals.player_turn = Globals.player_list[0].id;
+		Globals.set_player_turn.rpc(Globals.player_list[0].id);
 
 	var level: Level = level_scene.instantiate();
 	add_child(level, true);
-	level.add_players(player_list);
+	level.add_players(Globals.player_list);
 
 @rpc("any_peer", "call_remote")
 func _client_join(id) -> void:
