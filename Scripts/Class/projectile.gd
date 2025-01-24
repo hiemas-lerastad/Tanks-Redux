@@ -15,7 +15,6 @@ func explode() ->void:
 	if(explosion_type != null):
 		var explosion_clone: explosion = explosion_type.instantiate()
 		explosion_clone.global_position = global_position
-		Globals.level.square_manager.call_carve_around_point(global_position, 40, 60)
 		add_sibling(explosion_clone, true)
 		queue_free()
 

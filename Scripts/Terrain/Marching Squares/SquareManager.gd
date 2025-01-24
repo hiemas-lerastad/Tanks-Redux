@@ -148,9 +148,6 @@ func init_terrain() -> void:
 	size_width = (get_viewport().content_scale_size.y / grid_scale) + 1;
 	size_height = (get_viewport().content_scale_size.x / grid_scale) + 2;
 	
-	print(get_viewport().content_scale_size.x)
-	print(size_width)
-	
 	seed = level.seed;
 	
 	noise = FastNoiseLite.new();
@@ -345,7 +342,12 @@ func _carve_around_point(center_point: Vector2, inner_radius: float, outer_radiu
 	var outer_points: Array[Vector2] = _get_points_in_circle(center_point, outer_radius)
 
 	for point in outer_points:
-		matrix[point.x * size_width + point.y] = clamp(matrix[point.x * size_width + point.y] - 5, 0, 1);
+		var distance_from_inner = (point.distance_to(Vector2(grid_scale, grid_scale)) - inner_radius) / (outer_radius - inner_radius) / 3
+		if distance_from_inner < 0:
+			distance_from_inner = 0 - distance_from_inner
+			
+		distance_from_inner = clampf(distance_from_inner, 0, matrix[point.x * size_width + point.y])
+		matrix[point.x * size_width + point.y] = distance_from_inner;
 
 	for point in inner_points:
 		matrix[point.x * size_width + point.y] = 0;
