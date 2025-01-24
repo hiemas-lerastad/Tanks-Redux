@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Menu/Lobby.gd" id="1_p1hnd"]
 [ext_resource type="PackedScene" uid="uid://dxqf3upn7qgvi" path="res://Scenes/Menu/Player Label.tscn" id="2_3whku"]
 
-[node name="Lobby" type="Control" node_paths=PackedStringArray("main_menu", "lobby_panel", "address_entry", "player_list")]
+[node name="Lobby" type="Control" node_paths=PackedStringArray("main_menu", "lobby_panel", "address_entry", "player_list", "start_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,6 +15,7 @@ main_menu = NodePath("Main Menu")
 lobby_panel = NodePath("Lobby Panel")
 address_entry = NodePath("Main Menu/VBoxContainer/Ip Input")
 player_list = NodePath("Lobby Panel/HBoxContainer/Player List")
+start_button = NodePath("Lobby Panel/HBoxContainer/Button Container/Start Game")
 player_scene = ExtResource("2_3whku")
 
 [node name="Main Menu" type="Panel" parent="."]
@@ -67,6 +68,10 @@ layout_mode = 2
 text = "Start Game
 "
 
+[node name="Add Player" type="Button" parent="Lobby Panel/HBoxContainer/Button Container"]
+layout_mode = 2
+text = "Add Player"
+
 [node name="Player List" type="VBoxContainer" parent="Lobby Panel/HBoxContainer"]
 layout_mode = 2
 
@@ -82,3 +87,4 @@ spawn_path = NodePath("../HBoxContainer/Player List")
 [connection signal="pressed" from="Main Menu/VBoxContainer/Host Button" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="Main Menu/VBoxContainer/Join Button" to="." method="_on_join_button_pressed"]
 [connection signal="pressed" from="Lobby Panel/HBoxContainer/Button Container/Start Game" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Lobby Panel/HBoxContainer/Button Container/Add Player" to="." method="_on_add_button_pressed"]

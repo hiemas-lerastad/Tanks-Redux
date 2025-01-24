@@ -16,16 +16,21 @@ func _ready():
 	lobby.host_game.connect(_on_host);
 	lobby.join_game.connect(_on_join);
 	lobby.start_game.connect(_start_game);
+	lobby.add_new_player.connect(_add_new_player);
 
 func _on_host() -> void:
 	enet_peer.create_server(PORT);
 	multiplayer.multiplayer_peer = enet_peer;
-	multiplayer.peer_connected.connect(lobby.add_player);
+	#multiplayer.peer_connected.connect(_add_lobby_player);
 	multiplayer.peer_disconnected.connect(lobby.remove_player);
 	
-	lobby.add_player(multiplayer.get_unique_id());
+	lobby.add_player(player_list.size());
 	
-	player_list.append(multiplayer.get_unique_id());
+	player_list.append({
+		'id': 0,
+		'multiplayer_id': multiplayer.get_unique_id(),
+		'active': true
+	})
 	
 	lobby.show_lobby();
 	
@@ -41,6 +46,22 @@ func _on_join() -> void:
 
 	_client_join.rpc(multiplayer.get_unique_id());
 
+func _add_lobby_player(peer_id: int) -> void:
+	lobby.add_player(player_list.size());
+	
+func _add_new_player() -> void:
+	if not multiplayer.is_server():
+		_client_join.rpc(multiplayer.get_unique_id());
+		#lobby.add_remote_player.rpc(player_list.size())
+	else:
+		lobby.add_player(player_list.size())
+		player_list.append({
+			'id': player_list.size(),
+			'multiplayer_id': multiplayer.get_unique_id(),
+			'active': true
+		})
+		
+
 func _start_game() -> void:
 	if multiplayer.is_server():
 		lobby.queue_free();
@@ -50,7 +71,7 @@ func _start_game() -> void:
 		for player_index in range(0, player_list.size()):
 			Globals.player_list.append({
 				'id': player_index,
-				'multiplayer_id': player_list[player_index],
+				'multiplayer_id': player_list[player_index].multiplayer_id,
 				'active': true
 			})
 			
@@ -65,7 +86,12 @@ func _start_game() -> void:
 
 @rpc("any_peer", "call_remote")
 func _client_join(id) -> void:
-	player_list.append(id);
+	_add_lobby_player(0)
+	player_list.append({
+		'id': player_list.size(),
+		'multiplayer_id': id,
+		'active': true
+	})
 
 @rpc("any_peer", "call_remote")
 func _client_start() -> void:

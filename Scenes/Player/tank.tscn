@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://m03xo3rkc33r"]
+[gd_scene load_steps=11 format=3 uid="uid://m03xo3rkc33r"]
 
 [ext_resource type="Script" path="res://Scripts/Player/tank.gd" id="1_bffw6"]
 [ext_resource type="Texture2D" uid="uid://bvgqv1b486d6u" path="res://Assets/Sprites/Player/body.png" id="1_edwx4"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/Components/_weapon_component.gd" id="3_q2cq8"]
 [ext_resource type="PackedScene" uid="uid://b247dmol544os" path="res://Scenes/Projectiles/small.tscn" id="4_0veau"]
 [ext_resource type="Texture2D" uid="uid://r5bsbxglfft5" path="res://Assets/Sprites/Player/tmp_power.png" id="5_3fhk8"]
+[ext_resource type="Texture2D" uid="uid://g0sdbhn8ml8k" path="res://icon.svg" id="8_km0xx"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3ot6a"]
 radius = 13.5
@@ -26,13 +27,14 @@ properties/3/path = NodePath(".:multiplayer_id")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[node name="tank" type="CharacterBody2D" node_paths=PackedStringArray("body", "turret", "shoot_progress")]
+[node name="tank" type="CharacterBody2D" node_paths=PackedStringArray("body", "turret", "indicator", "shoot_progress")]
 texture_filter = 1
 collision_layer = 2
 floor_max_angle = 1.22173
 script = ExtResource("1_bffw6")
 body = NodePath("body")
 turret = NodePath("body/turret")
+indicator = NodePath("body/Indicator")
 shoot_progress = NodePath("body/turret/shoot_progress")
 
 [node name="_input_component" type="Node" parent="." node_paths=PackedStringArray("controls")]
@@ -64,6 +66,12 @@ rotation = -1.5708
 scale = Vector2(0.45, 0.45)
 texture_progress = ExtResource("5_3fhk8")
 texture_progress_offset = Vector2(0, -25)
+
+[node name="Indicator" type="Sprite2D" parent="body"]
+visible = false
+position = Vector2(-3.8147e-06, -33)
+scale = Vector2(0.117188, 0.109375)
+texture = ExtResource("8_km0xx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 9.5)

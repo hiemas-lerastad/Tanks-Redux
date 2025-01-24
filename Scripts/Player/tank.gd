@@ -9,12 +9,10 @@ extends CharacterBody2D
 @export_category("tank_parts")
 @export var body: Sprite2D;
 @export var turret: Sprite2D;
+@export var indicator: Sprite2D;
 
 @export_category("tank_ui")
 @export var shoot_progress: TextureProgressBar;
-
-@export_category("nodes")
-@export var projectile_container_name: String;
 
 func _enter_tree():
 	if (multiplayer_id) == 0:
@@ -27,4 +25,9 @@ func _enter_tree():
 	position = spawn_position;
 
 func _physics_process(delta):
+	if Globals.player_turn == id and not indicator.visible and multiplayer_id == multiplayer.get_unique_id():
+		indicator.show();
+	elif indicator.visible:
+		indicator.hide();
+		
 	move_and_slide();

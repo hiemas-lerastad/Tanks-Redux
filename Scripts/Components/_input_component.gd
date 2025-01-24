@@ -94,3 +94,5 @@ func _process(delta) -> void:
 		movement_controls()
 		turret_controls(delta)
 		fire_controls()
+	else:
+		controls.velocity.x = 0;
