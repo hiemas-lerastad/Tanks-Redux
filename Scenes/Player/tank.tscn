@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://m03xo3rkc33r"]
+[gd_scene load_steps=12 format=3 uid="uid://m03xo3rkc33r"]
 
 [ext_resource type="Script" path="res://Scripts/Player/tank.gd" id="1_bffw6"]
 [ext_resource type="Texture2D" uid="uid://bvgqv1b486d6u" path="res://Assets/Sprites/Player/body.png" id="1_edwx4"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://Scripts/Components/_weapon_component.gd" id="3_q2cq8"]
 [ext_resource type="PackedScene" uid="uid://b247dmol544os" path="res://Scenes/Projectiles/small.tscn" id="4_0veau"]
 [ext_resource type="Texture2D" uid="uid://r5bsbxglfft5" path="res://Assets/Sprites/Player/tmp_power.png" id="5_3fhk8"]
+[ext_resource type="Script" path="res://Scripts/Components/_health_component.gd" id="5_30h06"]
+[ext_resource type="PackedScene" uid="uid://cf1um28e5k160" path="res://Scenes/Explosions/small.tscn" id="6_wt4h7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3ot6a"]
 radius = 13.5
@@ -23,13 +25,14 @@ properties/2/path = NodePath(".:projectile_container_name")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="tank" type="CharacterBody2D" node_paths=PackedStringArray("body", "turret", "shoot_progress")]
+[node name="tank" type="CharacterBody2D" node_paths=PackedStringArray("body", "turret", "shoot_progress", "health_component")]
 texture_filter = 1
 collision_layer = 2
 script = ExtResource("1_bffw6")
 body = NodePath("body")
 turret = NodePath("body/turret")
 shoot_progress = NodePath("body/turret/shoot_progress")
+health_component = NodePath("_health_component")
 
 [node name="_input_component" type="Node" parent="." node_paths=PackedStringArray("controls")]
 script = ExtResource("2_n0vqo")
@@ -40,6 +43,11 @@ script = ExtResource("3_q2cq8")
 shoot_point = NodePath("../body/turret/shoot_point")
 parent_tank = NodePath("..")
 projectile_scene = ExtResource("4_0veau")
+
+[node name="_health_component" type="Node" parent="." node_paths=PackedStringArray("parent_tank")]
+script = ExtResource("5_30h06")
+parent_tank = NodePath("..")
+death_explosion = ExtResource("6_wt4h7")
 
 [node name="body" type="Sprite2D" parent="."]
 texture = ExtResource("1_edwx4")

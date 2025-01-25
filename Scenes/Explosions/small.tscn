@@ -11,13 +11,17 @@ properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[node name="Small" type="Sprite2D"]
+[node name="Small" type="Sprite2D" node_paths=PackedStringArray("explosion_area")]
 texture_filter = 1
 texture = ExtResource("1_yt7p2")
 script = ExtResource("2_ptwyi")
+explosion_damage = 20
 exploision_time = 1.0
+explosion_area = NodePath("Area2D")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_3vdg8")

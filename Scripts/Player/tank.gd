@@ -12,7 +12,15 @@ extends CharacterBody2D
 @export var shoot_progress: TextureProgressBar;
 
 @export_category("nodes")
+@export var health_component: Node;
 @export var projectile_container_name: String;
+
+var still_playing: bool = true
+var is_game_over: bool
+func _knocked_out():
+	still_playing = false
+	visible = false
+	$CollisionShape2D.disabled = true
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())

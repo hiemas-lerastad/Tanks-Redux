@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ciht2tcxuqcvo"]
+[gd_scene load_steps=7 format=3 uid="uid://ciht2tcxuqcvo"]
 
 [ext_resource type="Script" path="res://Scripts/Terrain/Marching Squares/SquareManager.gd" id="1_nlywu"]
 [ext_resource type="Script" path="res://Scripts/Level/Level.gd" id="1_o3847"]
 [ext_resource type="PackedScene" uid="uid://c8rt2gk22dhxm" path="res://Scenes/Terrain/Marching Squares/Square.tscn" id="2_ttqaj"]
+[ext_resource type="PackedScene" uid="uid://bo2u7hpywl28r" path="res://Scenes/UI/in_game_ui.tscn" id="3_gwwqs"]
 [ext_resource type="PackedScene" uid="uid://m03xo3rkc33r" path="res://Scenes/Player/tank.tscn" id="3_ncci5"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2mksd"]
@@ -20,6 +21,7 @@ square_manager = NodePath("Squares")
 carve_shape = NodePath("Carve Shape TEST")
 projectile_container = NodePath("Projectile Container")
 player_scene = ExtResource("3_ncci5")
+ui_scene = ExtResource("3_gwwqs")
 
 [node name="Squares" type="StaticBody2D" parent="." node_paths=PackedStringArray("level")]
 script = ExtResource("1_nlywu")
