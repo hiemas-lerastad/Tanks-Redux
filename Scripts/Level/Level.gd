@@ -39,14 +39,18 @@ func add_players(player_list: Array) -> void:
 			player_instance.multiplayer_id = multiplayer_id;
 			player_container.add_child(player_instance, true);
 			
+			await square_manager.initialised;
 			setup_player.rpc_id(multiplayer_id, player, index);
 		
 @rpc("call_local", "reliable")
 func setup_player(player: int, index: int) -> void:
 	if player_container.get_node_or_null(str(player)):
 		var player_instance: Player = player_container.get_node_or_null(str(player));
+		var padding: int = 100;
+		var spawn_width: int = get_viewport().content_scale_size.x - padding
+		var player_x_position: float = ((spawn_width / clamp(Globals.player_list.size() - 1, 1, 100)) * (index)) + (padding / 2);
 
-		player_instance.position = Vector2(player_instance.position.x + (index * 200), player_instance.position.y);
+		player_instance.position.x = player_x_position;
 
 #func _process(_delta) -> void:
 	#if Input.is_action_pressed("click_left"):

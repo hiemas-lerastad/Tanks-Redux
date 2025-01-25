@@ -10,6 +10,7 @@ extends CharacterBody2D
 @export var body: Sprite2D;
 @export var turret: Sprite2D;
 @export var indicator: Sprite2D;
+@export var terrain_detector: RayCast2D;
 
 @export_category("tank_ui")
 @export var shoot_progress: TextureProgressBar;
@@ -25,6 +26,10 @@ func _enter_tree():
 	position = spawn_position;
 
 func _physics_process(delta):
+	if terrain_detector.is_colliding():
+		var vertex = terrain_detector.get_collision_point()
+		position.y = vertex.y - 10;
+		terrain_detector.enabled = false;
 	if Globals.player_turn == id and not indicator.visible and multiplayer_id == multiplayer.get_unique_id():
 		indicator.show();
 	elif indicator.visible:

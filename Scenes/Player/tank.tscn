@@ -27,14 +27,16 @@ properties/3/path = NodePath(".:multiplayer_id")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[node name="tank" type="CharacterBody2D" node_paths=PackedStringArray("body", "turret", "indicator", "shoot_progress")]
+[node name="tank" type="CharacterBody2D" node_paths=PackedStringArray("body", "turret", "indicator", "terrain_detector", "shoot_progress")]
 texture_filter = 1
 collision_layer = 2
+collision_mask = 5
 floor_max_angle = 1.22173
 script = ExtResource("1_bffw6")
 body = NodePath("body")
 turret = NodePath("body/turret")
 indicator = NodePath("body/Indicator")
+terrain_detector = NodePath("RayCast2D")
 shoot_progress = NodePath("body/turret/shoot_progress")
 
 [node name="_input_component" type="Node" parent="." node_paths=PackedStringArray("controls")]
@@ -80,6 +82,10 @@ shape = SubResource("CapsuleShape2D_3ot6a")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_b4fuv")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 1000)
+collide_with_areas = true
 
 [connection signal="begin_firing" from="_input_component" to="_input_component" method="_begin_shooting_animation"]
 [connection signal="end_firing" from="_input_component" to="_input_component" method="_end_shooting_animation"]

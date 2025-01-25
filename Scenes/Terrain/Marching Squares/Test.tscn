@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://ciht2tcxuqcvo"]
+[gd_scene load_steps=7 format=3 uid="uid://ciht2tcxuqcvo"]
 
 [ext_resource type="Script" path="res://Scripts/Terrain/Marching Squares/SquareManager.gd" id="1_nlywu"]
 [ext_resource type="Script" path="res://Scripts/Level/Level.gd" id="1_o3847"]
 [ext_resource type="PackedScene" uid="uid://c8rt2gk22dhxm" path="res://Scenes/Terrain/Marching Squares/Square.tscn" id="2_ttqaj"]
 [ext_resource type="PackedScene" uid="uid://m03xo3rkc33r" path="res://Scenes/Player/tank.tscn" id="3_ncci5"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_vdy4y"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2mksd"]
 properties/0/path = NodePath(".:seed")
@@ -21,7 +23,31 @@ carve_shape = NodePath("Carve Shape TEST")
 projectile_container = NodePath("Projectile Container")
 player_scene = ExtResource("3_ncci5")
 
+[node name="Border" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Floor" type="CollisionShape2D" parent="Border"]
+position = Vector2(570, 648)
+shape = SubResource("WorldBoundaryShape2D_vdy4y")
+
+[node name="Ceiling" type="CollisionShape2D" parent="Border"]
+position = Vector2(570, -1)
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_vdy4y")
+
+[node name="Left" type="CollisionShape2D" parent="Border"]
+position = Vector2(-2, 286)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_vdy4y")
+
+[node name="Right" type="CollisionShape2D" parent="Border"]
+position = Vector2(1155, 288)
+rotation = -1.5708
+shape = SubResource("WorldBoundaryShape2D_vdy4y")
+
 [node name="Squares" type="StaticBody2D" parent="." node_paths=PackedStringArray("level")]
+collision_mask = 3
 script = ExtResource("1_nlywu")
 dot_color_filled = Color(1, 1, 1, 1)
 square_scene = ExtResource("2_ttqaj")

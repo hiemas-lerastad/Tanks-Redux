@@ -90,7 +90,7 @@ func _client_join(id) -> void:
 	player_list.append({
 		'id': player_list.size(),
 		'multiplayer_id': id,
-		'active': true
+		'active': true,
 	})
 
 @rpc("any_peer", "call_remote")

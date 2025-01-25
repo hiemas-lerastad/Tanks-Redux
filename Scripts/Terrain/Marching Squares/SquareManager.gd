@@ -7,6 +7,7 @@ extends Node2D;
 @export var size_width: int;
 @export var size_height: int;
 @export var seed: int;
+@export var initialised: bool = false;
 
 var noise: FastNoiseLite;
 
@@ -218,6 +219,8 @@ func init_terrain() -> void:
 			add_child(square);
 			
 			squares_matrix[(x) * size_width + (y)] = square;
+
+	initialised = true;
 
 func set_initial_grid() -> void:	
 	matrix.clear()
