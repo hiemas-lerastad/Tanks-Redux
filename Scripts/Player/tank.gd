@@ -15,6 +15,17 @@ extends CharacterBody2D
 @export_category("tank_ui")
 @export var shoot_progress: TextureProgressBar;
 
+@export_category("nodes")
+@export var health_component: Node;
+@export var projectile_container_name: String;
+
+var still_playing: bool = true
+var is_game_over: bool
+func _knocked_out():
+	still_playing = false
+	visible = false
+	$CollisionShape2D.disabled = true
+
 func _enter_tree():
 	if (multiplayer_id) == 0:
 		for index in Globals.player_list.size():

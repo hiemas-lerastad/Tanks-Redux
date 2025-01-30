@@ -6,6 +6,8 @@ class_name projectile
 var initial_strength: int
 
 
+
+
 func explode() ->void:
 	''' swap sprite to appropriate explosion type, create a temporary area2d to scan for players without 
 	colliding with them, trigger the growing + culling'''
@@ -17,6 +19,7 @@ func explode() ->void:
 		explosion_clone.global_position = global_position
 		add_sibling(explosion_clone, true)
 		queue_free()
+
 
 func _wind_resistance() -> void:
 	''' placeholder until wind has been added'''

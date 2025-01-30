@@ -9,6 +9,7 @@ extends Node2D;
 
 @export_category("Scenes")
 @export var player_scene: PackedScene;
+@export var ui_scene: PackedScene;
 
 @export_category("Variables")
 @export var seed: int;
@@ -16,6 +17,16 @@ extends Node2D;
 var mouse_pos: Vector2 = Vector2();
 var old_mouse_pos: Vector2 = Vector2();
 
+func check_game_over():
+	#if multiplayer.is_server():
+	var players = player_container.get_children()
+	var amount_lost: int
+	for c: Player in players:
+		if(c.still_playing == false):
+			amount_lost += 1
+	if(amount_lost == len(players) - 1):
+		for c: Player in players:
+			c.is_game_over = true
 func _ready() -> void:
 	if multiplayer.is_server():
 		randomize()
@@ -52,7 +63,14 @@ func setup_player(player: int, index: int) -> void:
 
 		player_instance.position.x = player_x_position;
 
+		var ui_instance: Control = ui_scene.instantiate()
+		''' spawn the UI instance + link to player instance to track health, TODO add wind link to level + sync that between turns'''
+		ui_instance.linked_player = player_instance
+		add_sibling(ui_instance)
+		player_instance.position = Vector2(player_instance.position.x + (index * 200), player_instance.position.y);
+
 #func _process(_delta) -> void:
+	#check_game_over()
 	#if Input.is_action_pressed("click_left"):
 		#if old_mouse_pos.distance_to(mouse_pos) > 5:
 			#square_manager.call_carve_around_point(mouse_pos, 40, 50);
