@@ -2,11 +2,10 @@
 
 [ext_resource type="Script" path="res://Scripts/Level/Level.gd" id="1_nfh3v"]
 [ext_resource type="PackedScene" uid="uid://cx4f5lucu71a0" path="res://Scenes/Terrain/Terrain.tscn" id="1_pvfms"]
-[ext_resource type="PackedScene" uid="uid://m03xo3rkc33r" path="res://Scenes/Player/tank.tscn" id="2_poure"]
+[ext_resource type="PackedScene" uid="uid://bkf8b3wy4h3td" path="res://Scenes/Player/tank.tscn" id="2_poure"]
 
-[node name="TerrainTest" type="Node2D" node_paths=PackedStringArray("terrain", "player_container")]
+[node name="TerrainTest" type="Node2D" node_paths=PackedStringArray("player_container")]
 script = ExtResource("1_nfh3v")
-terrain = NodePath("Terrain")
 player_container = NodePath("Players")
 player_scene = ExtResource("2_poure")
 

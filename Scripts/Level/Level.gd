@@ -6,6 +6,8 @@ extends Node2D;
 @export var square_manager: SquareManager;
 @export var carve_shape: Polygon2D;
 @export var projectile_container: Node2D;
+@export var uis: Dictionary;
+@export var turn_timer: Timer;
 
 @export_category("Scenes")
 @export var player_scene: PackedScene;
@@ -66,7 +68,9 @@ func setup_player(player: int, index: int) -> void:
 		var ui_instance: Control = ui_scene.instantiate()
 		''' spawn the UI instance + link to player instance to track health, TODO add wind link to level + sync that between turns'''
 		ui_instance.linked_player = player_instance
-		add_sibling(ui_instance)
+		ui_instance.hide()
+		uis[player_instance.id] = ui_instance;
+		add_sibling(ui_instance);
 		player_instance.position = Vector2(player_instance.position.x + (index * 200), player_instance.position.y);
 
 #func _process(_delta) -> void:
@@ -80,6 +84,39 @@ func _input(event) -> void:
 	if event is InputEventMouseMotion:
 		mouse_pos = get_global_mouse_position();
 		carve_shape.position = mouse_pos;
+
+func start_turn_timer() -> void:
+	turn_timer.stop();
+	turn_timer.start()
+	
+func extend_turn_timer() -> void:
+	turn_timer.stop();
+	turn_timer.wait_time = 2;
+	turn_timer.start();
+	
+func _reset_turn_timer() -> void:
+	turn_timer.stop();
+	turn_timer.wait_time = 30;
+	
+func _on_turn_timer_timeout() -> void:
+	_reset_turn_timer();
+	
+	for player in player_container.get_children():
+		player.fired = false;
+	
+	if is_multiplayer_authority():
+		_next_player_turn()
+
+func _next_player_turn() -> void:
+		if Globals.player_turn + 1 < Globals.player_list.size():
+			Globals.player_turn = Globals.player_turn + 1;
+			Globals.set_player_turn.rpc(Globals.player_turn);
+		else:
+			Globals.player_turn = 0;
+			Globals.set_player_turn.rpc(0);
+			
+		if not Globals.player_list[Globals.player_turn].active:
+			_next_player_turn();
 
 #func _make_mouse_circle() -> void:
 	#var nb_points = 15

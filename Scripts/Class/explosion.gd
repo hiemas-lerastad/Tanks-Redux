@@ -18,7 +18,8 @@ func _ready():
 	var tw: Tween = create_tween()
 	tw.tween_property(self,"scale",explosion_scale,exploision_time)
 	tw.tween_property(self,"scale",Vector2(0,0),.5)
-	tw.tween_callback(queue_free)
+	if multiplayer.is_server():
+		tw.tween_callback(queue_free)
 
 	var timer: Timer = Timer.new()
 	add_child(timer)
@@ -27,6 +28,8 @@ func _ready():
 	timer.wait_time = exploision_time;
 	timer.timeout.connect(_trigger_carve)
 	timer.start()
+	
+	Globals.level.extend_turn_timer();
 
 func _trigger_carve():
 	Globals.level.square_manager.call_carve_around_point(global_position, inner_explosion_radius, outer_explosion_radius)

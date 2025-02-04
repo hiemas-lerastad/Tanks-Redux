@@ -1,10 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://ciht2tcxuqcvo"]
+[gd_scene load_steps=8 format=3 uid="uid://ciht2tcxuqcvo"]
 
 [ext_resource type="Script" path="res://Scripts/Terrain/Marching Squares/SquareManager.gd" id="1_nlywu"]
 [ext_resource type="Script" path="res://Scripts/Level/Level.gd" id="1_o3847"]
 [ext_resource type="PackedScene" uid="uid://c8rt2gk22dhxm" path="res://Scenes/Terrain/Marching Squares/Square.tscn" id="2_ttqaj"]
 [ext_resource type="PackedScene" uid="uid://bo2u7hpywl28r" path="res://Scenes/UI/in_game_ui.tscn" id="3_gwwqs"]
-[ext_resource type="PackedScene" uid="uid://m03xo3rkc33r" path="res://Scenes/Player/tank.tscn" id="3_ncci5"]
+[ext_resource type="PackedScene" uid="uid://bkf8b3wy4h3td" path="res://Scenes/Player/tank.tscn" id="3_ncci5"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_vdy4y"]
 
@@ -16,12 +16,13 @@ properties/1/path = NodePath("Squares:seed")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Test" type="Node2D" node_paths=PackedStringArray("player_container", "square_manager", "carve_shape", "projectile_container")]
+[node name="Test" type="Node2D" node_paths=PackedStringArray("player_container", "square_manager", "carve_shape", "projectile_container", "turn_timer")]
 script = ExtResource("1_o3847")
 player_container = NodePath("Player Container")
 square_manager = NodePath("Squares")
 carve_shape = NodePath("Carve Shape TEST")
 projectile_container = NodePath("Projectile Container")
+turn_timer = NodePath("Turn Timer")
 player_scene = ExtResource("3_ncci5")
 ui_scene = ExtResource("3_gwwqs")
 
@@ -71,3 +72,9 @@ replication_config = SubResource("SceneReplicationConfig_2mksd")
 [node name="Carve Shape TEST" type="Polygon2D" parent="."]
 
 [node name="Projectile Container" type="Node2D" parent="."]
+
+[node name="Turn Timer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+
+[connection signal="timeout" from="Turn Timer" to="." method="_on_turn_timer_timeout"]

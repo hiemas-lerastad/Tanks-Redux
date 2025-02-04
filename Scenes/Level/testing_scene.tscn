@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bejc07m5l7lfw"]
 
-[ext_resource type="PackedScene" uid="uid://m03xo3rkc33r" path="res://Scenes/Player/tank.tscn" id="1_rr33h"]
+[ext_resource type="PackedScene" uid="uid://bkf8b3wy4h3td" path="res://Scenes/Player/tank.tscn" id="1_rr33h"]
 [ext_resource type="PackedScene" uid="uid://b247dmol544os" path="res://Scenes/Projectiles/small.tscn" id="2_oh0rr"]
 
 [node name="TestingScene" type="Node2D"]

@@ -12,11 +12,16 @@ func explode() ->void:
 	if not multiplayer.is_server():
 		return
 
+	Globals.player_list[parent_tank.id].active = false;
+	set_player_inactive.rpc();
+	
 	if(death_explosion != null):
 		var explosion_clone: explosion = death_explosion.instantiate()
 		explosion_clone.global_position = parent_tank.global_position
 		add_sibling(explosion_clone, true)
-		
+@rpc('reliable', 'any_peer')	
+func set_player_inactive() -> void:
+	Globals.player_list[parent_tank.id].active = false;
 
 func take_damage(damage: int):
 	current_health -= damage

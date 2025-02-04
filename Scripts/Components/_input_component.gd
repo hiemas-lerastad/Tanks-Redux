@@ -69,13 +69,9 @@ func fire_controls() -> void:
 		is_firing = false
 		emit_signal("shot_fired",controls.shoot_progress.value) # bind projectile shot to this
 		emit_signal("end_firing")
+		controls.fired = true;
 		
-		if Globals.player_turn + 1 < Globals.player_list.size():
-			Globals.player_turn = Globals.player_turn + 1;
-			Globals.set_player_turn.rpc(Globals.player_turn);
-		else:
-			Globals.player_turn = 0;
-			Globals.set_player_turn.rpc(0);
+		Globals.level.start_turn_timer();
 
 func _begin_shooting_animation():
 	firing_tween = create_tween()
@@ -85,12 +81,12 @@ func _begin_shooting_animation():
 
 func _end_shooting_animation():
 	firing_tween.kill()
-	controls.shoot_progress.value = 0
+	controls.shoot_progress.value = 0;
 
 func _process(delta) -> void:
 	gravity()
 
-	if Globals.player_turn == controls.id:
+	if Globals.player_turn == controls.id and not controls.fired:
 		movement_controls()
 		turret_controls(delta)
 		fire_controls()

@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var spawn_position: Vector2;
 @export var id: int;
 @export var multiplayer_id: int;
+@export var fired: bool = false;
 
 @export_category("tank_parts")
 @export var body: Sprite2D;
@@ -35,6 +36,16 @@ func _enter_tree():
 
 	set_multiplayer_authority(str(multiplayer_id).to_int())
 	position = spawn_position;
+	
+#func _process(delta: float) -> void:
+	#if Globals.level.uis[id]:
+		#if Globals.player_turn == id and not Globals.level.uis[id].visibile:
+			#Globals.level.uis[id].show();
+		#elif Globals.level.uis[id].visibile:
+			#Globals.level.uis[id].hide();
+
+func reset_fired() -> void:
+	fired = false;
 
 func _physics_process(delta):
 	if terrain_detector.is_colliding():
